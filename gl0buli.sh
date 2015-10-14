@@ -65,7 +65,7 @@ rot13() {
 }
 
 
-if [ - $1 ]; then
+if [ -z $1 ]; then
 	showHelp
 	exit
 fi
