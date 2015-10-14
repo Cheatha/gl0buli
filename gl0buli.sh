@@ -18,7 +18,7 @@ showHelp() {
 	echo "USAGE:"
 	echo -e "\tgl0buli.sh language\n"
 	echo "Available languages:"
-	echo -e "\tphp applescript bash c c++"
+	echo -e "\tphp applescript bash c c++ ruby"
 }
 
 
@@ -63,6 +63,12 @@ getRandomness() {
 rot13() {
 	echo $1 | tr A-Za-z N-ZA-Mn-za-m
 }
+
+
+if [ - $1 ]; then
+	showHelp
+	exit
+fi
 
 
 selectLanguage $input
