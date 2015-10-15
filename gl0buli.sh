@@ -18,7 +18,7 @@ showHelp() {
 	echo "USAGE:"
 	echo -e "\tgl0buli.sh language\n"
 	echo "Available languages:"
-	echo -e "\tphp applescript bash c c++ ruby java javascript perl"
+	echo -e "\tphp applescript bash c c++ ruby java javascript perl batch"
 }
 
 
@@ -33,6 +33,9 @@ selectLanguage() {
 		bash|ruby|perl)
 		tag="hash"
 		;;
+        batch)
+        tag="rem"
+        ;;
 		-h|*)
 		showHelp
 		;;
@@ -46,6 +49,9 @@ selectTag() {
                 ;;
                 doubleminus)
                         comment="--"
+                ;;
+                rem)
+                    comment="REM"
                 ;;
                 hash)
                 	comment="#"
