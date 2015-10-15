@@ -18,7 +18,7 @@ showHelp() {
 	echo "USAGE:"
 	echo -e "\tgl0buli.sh language\n"
 	echo "Available languages:"
-	echo -e "\tphp applescript bash c c++ ruby java javascript perl"
+	echo -e "\tphp applescript bash c c++ ruby java javascript perl python"
 }
 
 
@@ -30,7 +30,7 @@ selectLanguage() {
 		applescript)
 			tag="doubleminus"
 		;;
-		bash|ruby|perl)
+		bash|ruby|perl|python)
 		tag="hash"
 		;;
 		-h|*)
@@ -62,6 +62,17 @@ getRandomness() {
 
 rot13() {
 	echo $1 | tr A-Za-z N-ZA-Mn-za-m
+}
+
+sieve () {
+	case $1 in
+		python)
+			echo $2 | tr "acefijmopqruvxzACEFIJMOPQRUVXZ13579" "	                   "
+		;;
+		*)
+			echo $2
+		;;
+	esac
 }
 
 
@@ -119,6 +130,7 @@ echo "Oooops, our gl0buli is too large. Let's the most important…"
 echo "Yeah, this ancient monk stuff"
 gl0buli=`echo $gl0buli | cut -c1-10`
 
+gl0buli=$(sieve $input $gl0buli)
 
 echo "CONGRATULATION! Now you have your own gl0buli!"
 echo ""
