@@ -18,7 +18,7 @@ showHelp() {
 	echo "USAGE:"
 	echo -e "\tgl0buli.sh language\n"
 	echo "Available languages:"
-	echo -e "\tphp applescript bash c c++ ruby java javascript perl"
+	echo -e "\tphp applescript bash c c++ ruby java javascript perl python puppet"
 }
 
 
@@ -30,7 +30,7 @@ selectLanguage() {
 		applescript)
 			tag="doubleminus"
 		;;
-		bash|ruby|perl)
+		bash|ruby|perl|python|puppet)
 		tag="hash"
 		;;
 		-h|*)
