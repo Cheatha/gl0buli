@@ -18,19 +18,19 @@ showHelp() {
 	echo "USAGE:"
 	echo -e "\tgl0buli.sh language\n"
 	echo "Available languages:"
-	echo -e "\tphp applescript bash c c++ ruby"
+	echo -e "\tphp applescript bash c c++ ruby java javascript perl"
 }
 
 
 selectLanguage() {
 	case $1 in
-		php|c|c++)
+		php|c|c++|javascript|java)
 			tag="doubleslash"
 		;;
 		applescript)
 			tag="doubleminus"
 		;;
-		bash|ruby)
+		bash|ruby|perl)
 		tag="hash"
 		;;
 		-h|*)
