@@ -83,7 +83,7 @@ echo "Done."
 echo "This gl0buli has a strong binding to time and space!"
 read -p "Where are you now? " LOCATION
 
-time=`date +"%m/%d"`
+time=`date +"%Y-%m-%d %H:%M:%S"`
 echo "Your time is now: $time"
 
 echo "Now we merge gl0buli with time and space"
