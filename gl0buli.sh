@@ -86,8 +86,14 @@ read -p "Where are you now? " LOCATION
 time=`date +"%Y-%m-%d %H:%M:%S"`
 echo "Your time is now: $time"
 
+space=`df / |tail -n 1 |awk '/\s*/{ print $4 }'`
+echo "The computer has chosen its space to be: $space"
+
+echo "We now combine human and computer space for better compatibility"
+space="$space$LOCATION"
+
 echo "Now we merge gl0buli with time and space"
-gl0buli="$gl0buli $LOCATION $time"
+gl0buli="$gl0buli $space $time"
 
 echo "Insert some special ingredients"
 gl0buli="$gl0buli BUY MORE gl0buli!"
