@@ -81,6 +81,21 @@ sieve() {
 	esac
 }
 
+shake(){
+	length=${#1}
+	declare -a in
+
+	# Create an array, one value for each character
+	for (( pos=0; pos<=$length-1; pos++ ))
+	do
+		in=("${in[@]}" ${1:pos:1})
+	done
+	
+	# Randomize order
+	out=($(echo ${in[@]} | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
+
+	gl0buli=$( IFS=$''; echo "${out[*]}" )
+}
 
 if [ -z $1 ]; then
 	showHelp
@@ -138,9 +153,14 @@ do
 	gl0buli+="$gl0buli$magic"
 done
 
-echo "Oooops, our gl0buli is too large. Let's the most important…"
+echo "Oooops, our gl0buli is too large. Let's pick the most important…"
 echo "Yeah, this ancient monk stuff"
 gl0buli=`echo $gl0buli | cut -c1-10`
+
+echo "Let's shake the gl0buli!"
+oldgl0buli=$gl0buli
+shake $gl0buli
+echo "Whoo, $gl0buli looks much better than $oldgl0buli!"
 
 gl0buli=$(sieve $input $gl0buli)
 
