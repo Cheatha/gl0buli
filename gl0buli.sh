@@ -7,7 +7,7 @@
 #
 # DESCRIPTION:  Generate some gl0buli! Hide this gl0buli in your code to solve
 #		unsolvable or strange errors. Thanks to the gl0buli someone
-#		will someday solve YOUR problem! You have to believe!	
+#		will someday solve YOUR problem! You have to believe!
 #
 # AUTHOR: Florian "Cheatha" Köhler, github.com@cheatha.de
 #===================================================================================
@@ -21,72 +21,71 @@ showHelp() {
 	echo -e "\tphp applescript bash c c++ ruby java javascript perl batch python puppet"
 }
 
-
 selectLanguage() {
 	case $1 in
 		php|c|c++|javascript|java)
 			tag="doubleslash"
-		;;
+			;;
 		applescript)
 			tag="doubleminus"
-		;;
+			;;
 		bash|ruby|perl|python|puppet)
-		tag="hash"
-		;;
-	        batch)
-        	tag="rem"
-        	;;
+			tag="hash"
+			;;
+		batch)
+			tag="rem"
+			;;
 		-h|*)
-		showHelp
-		;;
+			showHelp
+			;;
 	esac
 }
 
 selectTag() {
 	case $1 in
-                doubleslash)
-                        comment="//"
-                ;;
-                doubleminus)
-                        comment="--"
-                ;;
-                rem)
-                	comment="REM"
-                ;;
-                hash)
-                	comment="#"
-                ;;
-        esac	
+		doubleslash)
+			comment="//"
+			;;
+		doubleminus)
+			comment="--"
+			;;
+		rem)
+			comment="REM"
+			;;
+		hash)
+			comment="#"
+			;;
+	esac
 }
 
 getRandomness() {
 	# we expect bs and count as $1 and $2
 	# although we are talking about homeopathy
 	# "bs" doesn't mean bullshit here
-        random="$(dd if=/dev/urandom bs=$1 count=$2)"
+	random=$(dd if=/dev/urandom bs=$1 count=$2)
 }
 
 rot13() {
-	echo $1 | tr A-Za-z N-ZA-Mn-za-m
+	echo "$1" | tr A-Za-z N-ZA-Mn-za-m
 }
 
 sieve() {
 	case $1 in
 		python)
 			echo $2 | tr "acefijmopqruvxzACEFIJMOPQRUVXZ13579" "	                   "
-		;;
+			;;
 		*)
 			echo $2
-		;;
+			;;
 	esac
 }
 
-shake(){
+shake() {
 	length=${#1}
 	declare -a in
 
 	# Create an array, one value for each character
-	for (( pos=0; pos<=$length-1; pos++ ))
+	for (( pos = 0; pos <= $length - 1; pos++ ))
 	do
 		in=("${in[@]}" ${1:pos:1})
 	done
@@ -94,7 +93,7 @@ shake(){
 	# Randomize order
 	out=($(echo ${in[@]} | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
 
-	gl0buli=$( IFS=$''; echo "${out[*]}" )
+	( IFS=$''; echo "${out[*]}"; )
 }
 
 if [ -z $1 ]; then
@@ -108,17 +107,17 @@ selectTag $tag
 
 echo "Gettting our ingredients…"
 echo ""
-gl0buli="$(getRandomness 32 10)"
+gl0buli=$(getRandomness 32 10)
 echo ""
 echo "Done."
 
 echo "This gl0buli has a strong binding to time and space!"
 read -p "Where are you now? " LOCATION
 
-time=`date +"%Y-%m-%d %H:%M:%S"`
+time=$(date +"%Y-%m-%d %H:%M:%S")
 echo "Your time is now: $time"
 
-space=`df / |tail -n 1 |awk '/\s*/{ print $4 }'`
+space=$(df / | tail -n 1 | awk '/\s*/ { print $4 }')
 echo "The computer has chosen its space to be: $space"
 
 echo "We now combine human and computer space for better compatibility"
@@ -131,14 +130,14 @@ echo "Insert some special ingredients"
 gl0buli="$gl0buli BUY MORE gl0buli!"
 
 echo "We don't want to be too specific about our gl0buli"
-gl0buli="$(echo $gl0buli|shasum)"
+gl0buli=$(echo "$gl0buli" | shasum)
 
 echo "Get the 'most important parts*' out of our gl0buli."
 echo "*(Ancient knowledge from a tibetan monk)"
-gl0buli=`echo $gl0buli | cut -c1-10`
+gl0buli=$(echo "$gl0buli" | cut -c1-10)
 
 echo "Now rotate gl0buli clockwise"
-gl0buli="$(rot13 $gl0buli)"
+gl0buli=$(rot13 "$gl0buli")
 
 echo "Add some fate. This fate was once a diceroll."
 echo "Your fate was selected by a fair diceroll!"
@@ -155,14 +154,14 @@ done
 
 echo "Oooops, our gl0buli is too large. Let's pick the most important…"
 echo "Yeah, this ancient monk stuff"
-gl0buli=`echo $gl0buli | cut -c1-10`
+gl0buli=$(echo "$gl0buli" | cut -c1-10)
 
 echo "Let's shake the gl0buli!"
 oldgl0buli=$gl0buli
-shake $gl0buli
+gl0buli=$(shake "$gl0buli")
 echo "Whoo, $gl0buli looks much better than $oldgl0buli!"
 
-gl0buli=$(sieve $input $gl0buli)
+gl0buli=$(sieve "$input" "$gl0buli")
 
 echo "CONGRATULATIONS! Now you have your own gl0buli!"
 echo ""
@@ -182,5 +181,3 @@ unset gl0buli
 unset random
 unset tag
 unset comment
-
-
