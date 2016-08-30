@@ -65,6 +65,24 @@ getRandomness() {
 	random=$(dd if=/dev/urandom bs=$1 count=$2)
 }
 
+show_patience() {
+	# we must be patient and show some patience!
+	patience_o_meter="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+	OLDIFS=$IFS
+	IFS=:
+	set -- $*
+	timer=$(( ${1#0} * 3600 + ${2#0} * 60 + ${3#0} ))
+	while [ $timer -gt 0 ]
+	do
+		sleep 1 &
+		printf "\r${patience_o_meter:$timer%${#patience_o_meter}:1} %02d:%02d:%02d " $((timer/3600)) $(( (timer/60)%60)) $((timer%60))
+		timer=$(( $timer - 1 ))
+		wait
+	done
+	echo
+	IFS=$OLDIFS
+}
+
 rot13() {
 	echo "$1" | tr A-Za-z N-ZA-Mn-za-m
 }
@@ -138,6 +156,12 @@ gl0buli=$(echo "$gl0buli" | cut -c1-10)
 
 echo "Now rotate gl0buli clockwise"
 gl0buli=$(rot13 "$gl0buli")
+
+echo "We need a little patience"
+patience=`awk 'BEGIN{srand();print int(rand()*(30-10))+10 }'`
+echo "Now showing patience for $patience seconds"
+show_patience "00:00:$patience"
+echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
 echo "Your fate was selected by a fair diceroll!"
