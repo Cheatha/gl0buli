@@ -17,17 +17,18 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-input=$*
+input=${1:-alpha}
 
 showHelp() {
 	echo "USAGE:"
 	echo -e "\tgl0buli.sh language\n"
 	echo "Available languages:"
 	echo -e "\tphp applescript bash c c++ go ruby java javascript perl batch python puppet swift objc"
+	exit 0
 }
 
 selectLanguage() {
-	case $1 in
+	case $input in
 		php|c|c++|go|javascript|java|swift|objc)
 			tag="doubleslash"
 			;;
@@ -42,12 +43,13 @@ selectLanguage() {
 			;;
 		-h|*)
 			showHelp
+			tag="none"
 			;;
 	esac
 }
 
 selectTag() {
-	case $1 in
+	case $tag in
 		doubleslash)
 			comment="//"
 			;;
@@ -154,14 +156,14 @@ html(){
 	echo "Your gl0buli can pick up here: $gl0buli_path/gl0buli-$date.html"
 }
 
-if [ -z $1 ]; then
+if [[ -z $input ]]; then
 	showHelp
 	exit
 fi
 
 
-selectLanguage $input
-selectTag $tag
+selectLanguage
+selectTag
 
 echo "Gettting our ingredients…"
 echo ""
