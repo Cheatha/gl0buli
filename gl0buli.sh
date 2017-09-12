@@ -110,11 +110,11 @@ shake() {
 	# Create an array, one value for each character
 	for (( pos = 0; pos <= $length - 1; pos++ ))
 	do
-		in=("${in[@]}" ${1:pos:1})
+		in=(${in[@]+"${in[@]}"} ${1:pos:1})
 	done
 	
 	# Randomize order
-	out=($(echo ${in[@]} | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
+	out=($(echo ${in[*]} | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
 
 	( IFS=$''; echo "${out[*]}"; )
 }
@@ -200,7 +200,7 @@ gl0buli=$(rot13 "$gl0buli")
 echo "We need a little patience"
 patience=`awk 'BEGIN{srand();print int(rand()*(30-10))+10 }'`
 echo "Now showing patience for $patience seconds"
-show_patience "00:00:$patience"
+#show_patience "00:00:$patience"
 echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
