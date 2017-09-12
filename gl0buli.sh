@@ -12,6 +12,11 @@
 # AUTHOR: Florian "Cheatha" Köhler, github.com@cheatha.de
 #===================================================================================
 
+# Enable unofficial bash strict mode
+# More info: http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
 input=$*
 
 showHelp() {
