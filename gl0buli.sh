@@ -195,7 +195,7 @@ gl0buli=$(rot13 "$gl0buli")
 echo "We need a little patience"
 patience=`awk 'BEGIN{srand();print int(rand()*(30-10))+10 }'`
 echo "Now showing patience for $patience seconds"
-#show_patience "00:00:$patience"
+show_patience "00:00:$patience"
 echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
