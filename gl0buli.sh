@@ -12,17 +12,23 @@
 # AUTHOR: Florian "Cheatha" Köhler, github.com@cheatha.de
 #===================================================================================
 
-input=$*
+# Enable unofficial bash strict mode
+# More info: http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
+input=${1:-alpha}
 
 showHelp() {
 	echo "USAGE:"
 	echo -e "\tgl0buli.sh language\n"
 	echo "Available languages:"
 	echo -e "\tphp applescript bash c c++ go ruby java javascript perl batch python puppet swift objc"
+	exit 0
 }
 
 selectLanguage() {
-	case $1 in
+	case $input in
 		php|c|c++|go|javascript|java|swift|objc)
 			tag="doubleslash"
 			;;
@@ -37,12 +43,13 @@ selectLanguage() {
 			;;
 		-h|*)
 			showHelp
+			tag="none"
 			;;
 	esac
 }
 
 selectTag() {
-	case $1 in
+	case $tag in
 		doubleslash)
 			comment="//"
 			;;
@@ -105,11 +112,11 @@ shake() {
 	# Create an array, one value for each character
 	for (( pos = 0; pos <= $length - 1; pos++ ))
 	do
-		in=("${in[@]}" ${1:pos:1})
+		in=(${in[@]+"${in[@]}"} ${1:pos:1})
 	done
 	
 	# Randomize order
-	out=($(echo ${in[@]} | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
+	out=($(echo ${in[*]} | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
 
 	( IFS=$''; echo "${out[*]}"; )
 }
@@ -149,14 +156,14 @@ html(){
 	echo "Your gl0buli can pick up here: $gl0buli_path/gl0buli-$date.html"
 }
 
-if [ -z $1 ]; then
+if [[ -z $input ]]; then
 	showHelp
 	exit
 fi
 
 
-selectLanguage $input
-selectTag $tag
+selectLanguage
+selectTag
 
 echo "Gettting our ingredients…"
 echo ""
@@ -195,7 +202,7 @@ gl0buli=$(rot13 "$gl0buli")
 echo "We need a little patience"
 patience=`awk 'BEGIN{srand();print int(rand()*(30-10))+10 }'`
 echo "Now showing patience for $patience seconds"
-show_patience "00:00:$patience"
+#show_patience "00:00:$patience"
 echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
