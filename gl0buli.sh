@@ -114,6 +114,23 @@ shake() {
 	( IFS=$''; echo "${out[*]}"; )
 }
 
+ascii(){
+echo "
+        _....._
+     .;;'      '-.
+   .;;:           '.
+  /;;:'             \\
+ |;;:    gl0buli    :\ 
+|;;:  $gl0buli     :|
+|;;::.              ;/
+ \;;::.             /
+   ';;::.         .'
+     '-;;:..  _.-'
+         '''''
+";
+}
+
+
 if [ -z $1 ]; then
 	showHelp
 	exit
@@ -196,6 +213,8 @@ echo "$comment Just believe in it!"
 echo "$comment $gl0buli"
 echo "$comment"
 echo ""
+
+ascii
 
 echo "Send gl0buli.sh within 24 hours to 12 friends or something really bad will happen!"
 echo "Really."
