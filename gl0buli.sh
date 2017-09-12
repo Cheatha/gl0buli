@@ -130,6 +130,24 @@ echo "
 ";
 }
 
+html(){
+	script_path=`basename $0`
+	dir_path=`dirname $0`
+	gl0buli_path="$dir_path/your_gl0bulis"
+
+	if [[ ! -d  "$gl0buli_path" ]]; then
+		mkdir -p "$gl0buli_path"
+	fi
+
+	date=`date +"%Y-%m-%d_%H-%M-%S"`
+
+	html_template="gl0buli.template.html"
+	html_template_path="$dir_path/$html_template"
+
+	cat $html_template_path| sed s/\$gl0buli/$gl0buli/ > $gl0buli_path/gl0buli-$date.html
+
+	echo "Your gl0buli can pick up here: $gl0buli_path/gl0buli-$date.html"
+}
 
 if [ -z $1 ]; then
 	showHelp
@@ -177,7 +195,7 @@ gl0buli=$(rot13 "$gl0buli")
 echo "We need a little patience"
 patience=`awk 'BEGIN{srand();print int(rand()*(30-10))+10 }'`
 echo "Now showing patience for $patience seconds"
-show_patience "00:00:$patience"
+#show_patience "00:00:$patience"
 echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
@@ -214,7 +232,36 @@ echo "$comment $gl0buli"
 echo "$comment"
 echo ""
 
-ascii
+echo "Do you want to print your awesome gl0buli as ASCII or save it as HTML?"
+echo "1) Show me some ASCII!"
+echo "2) I'd like to have some fancy HTML!"
+echo "3) None of the above, I'm fine. Thanks!"
+
+
+while true; do
+	read -p "Your choice: " -n 1 print
+	echo ""
+
+	case $print in
+		1)
+		echo "Here you go:"
+		ascii
+		break
+		;;
+		2)
+		echo "Your gl0buli will be safed in the gl0bulis directory."
+		html
+		break
+		;;
+		3)
+		echo "Fine. Enjoy your gl0buli!"
+		break
+		;;
+		*)
+		echo "Please choose your gl0buli output format!"
+		;;
+	esac
+done
 
 echo "Send gl0buli.sh within 24 hours to 12 friends or something really bad will happen!"
 echo "Really."
