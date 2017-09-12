@@ -21,9 +21,9 @@ input=${1:-alpha}
 
 showHelp() {
 	echo "USAGE:"
-	echo -e "\tgl0buli.sh language\n"
+	echo -e "\\tgl0buli.sh language\\n"
 	echo "Available languages:"
-	echo -e "\tphp applescript bash c c++ go ruby java javascript perl batch python puppet swift objc"
+	echo -e "\\tphp applescript bash c c++ go ruby java javascript perl batch python puppet swift objc"
 	exit 0
 }
 
@@ -69,21 +69,22 @@ getRandomness() {
 	# we expect bs and count as $1 and $2
 	# although we are talking about homeopathy
 	# "bs" doesn't mean bullshit here
-	random=$(dd if=/dev/urandom bs=$1 count=$2)
+	random=$(dd if=/dev/urandom bs="$1" count="$2")
+	echo "$random"
 }
 
 show_patience() {
 	# we must be patient and show some patience!
 	patience_o_meter="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
-	OLDIFS=$IFS
+	OLDIFS="$IFS"
 	IFS=:
-	set -- $*
+	set -- $@
 	timer=$(( ${1#0} * 3600 + ${2#0} * 60 + ${3#0} ))
-	while [ $timer -gt 0 ]
+	while [[ $timer -gt 0 ]]
 	do
 		sleep 1 &
-		printf "\r${patience_o_meter:$timer%${#patience_o_meter}:1} %02d:%02d:%02d " $((timer/3600)) $(( (timer/60)%60)) $((timer%60))
-		timer=$(( $timer - 1 ))
+		printf "\\r${patience_o_meter:$timer%${#patience_o_meter}:1} %02d:%02d:%02d " $((timer/3600)) $(( (timer/60)%60)) $((timer%60))
+		timer=$(( timer - 1 ))
 		wait
 	done
 	echo
@@ -97,10 +98,10 @@ rot13() {
 sieve() {
 	case $1 in
 		python)
-			echo $2 | tr "acefijmopqruvxzACEFIJMOPQRUVXZ13579" "	                   "
+			echo "$2" | tr "acefijmopqruvxzACEFIJMOPQRUVXZ13579" "	                   "
 			;;
 		*)
-			echo $2
+			echo "$2"
 			;;
 	esac
 }
@@ -110,13 +111,13 @@ shake() {
 	declare -a in
 
 	# Create an array, one value for each character
-	for (( pos = 0; pos <= $length - 1; pos++ ))
+	for (( pos = 0; pos <= length - 1; pos++ ))
 	do
-		in=(${in[@]+"${in[@]}"} ${1:pos:1})
+		in=(${in[@]+"${in[@]}"} "${1:pos:1}")
 	done
 	
 	# Randomize order
-	out=($(echo ${in[*]} | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
+	out=($(echo "${in[*]}" | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
 
 	( IFS=$''; echo "${out[*]}"; )
 }
@@ -127,10 +128,10 @@ echo "
      .;;'      '-.
    .;;:           '.
   /;;:'             \\
- |;;:    gl0buli    :\ 
+ |;;:    gl0buli    :\\ 
 |;;:  $gl0buli     :|
 |;;::.              ;/
- \;;::.             /
+ \\;;::.             /
    ';;::.         .'
      '-;;:..  _.-'
          '''''
@@ -138,20 +139,19 @@ echo "
 }
 
 html(){
-	script_path=`basename $0`
-	dir_path=`dirname $0`
+	dir_path=$(dirname "$0")
 	gl0buli_path="$dir_path/your_gl0bulis"
 
 	if [[ ! -d  "$gl0buli_path" ]]; then
 		mkdir -p "$gl0buli_path"
 	fi
 
-	date=`date +"%Y-%m-%d_%H-%M-%S"`
+	date=$(date +"%Y-%m-%d_%H-%M-%S")
 
 	html_template="gl0buli.template.html"
 	html_template_path="$dir_path/$html_template"
 
-	cat $html_template_path| sed s/\$gl0buli/$gl0buli/ > $gl0buli_path/gl0buli-$date.html
+	sed s/INSERT_GL0BULI_HERE/"$gl0buli"/ "$html_template_path" > "$gl0buli_path/gl0buli-$date.html"
 
 	echo "Your gl0buli can pick up here: $gl0buli_path/gl0buli-$date.html"
 }
@@ -172,7 +172,7 @@ echo ""
 echo "Done."
 
 echo "This gl0buli has a strong binding to time and space!"
-read -p "Where are you now? " LOCATION
+read -rp "Where are you now? " LOCATION
 
 time=$(date +"%Y-%m-%d %H:%M:%S")
 echo "Your time is now: $time"
@@ -200,9 +200,9 @@ echo "Now rotate gl0buli clockwise"
 gl0buli=$(rot13 "$gl0buli")
 
 echo "We need a little patience"
-patience=`awk 'BEGIN{srand();print int(rand()*(30-10))+10 }'`
+patience=$(awk 'BEGIN{srand();print int(rand()*(30-10))+10 }')
 echo "Now showing patience for $patience seconds"
-#show_patience "00:00:$patience"
+show_patience "00:00:$patience"
 echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
@@ -246,7 +246,7 @@ echo "3) None of the above, I'm fine. Thanks!"
 
 
 while true; do
-	read -p "Your choice: " -n 1 print
+	read -rp "Your choice: " -n 1 print
 	echo ""
 
 	case $print in
