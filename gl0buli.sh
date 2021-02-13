@@ -179,7 +179,7 @@ gl0buli="$(getRandomness 32 10)"
 echo ""
 echo "Done."
 
-echo "This gl0buli has a strong binding to time and space!"
+echo -e "\nThis gl0buli has a strong binding to time and space!"
 read -rp "Where are you now? " LOCATION
 
 time=$(date +"%Y-%m-%d %H:%M:%S")
@@ -188,53 +188,53 @@ echo "Your time is now: ${time}"
 space=$(df / | tail -n 1 | awk '/\s*/ { print $4 }')
 echo "The computer has chosen its space to be: ${space}"
 
-echo "We now combine human and computer space for better compatibility"
+echo -e "\nWe now combine human and computer space for better compatibility"
 space="${space}${LOCATION}"
 
-echo "Now we merge gl0buli with time and space"
+echo -e "\nNow we merge gl0buli with time and space"
 gl0buli="${gl0buli} ${space} ${time}"
 
-echo "Insert some special ingredients"
+echo -e "\nInsert some special ingredients"
 gl0buli="${gl0buli} BUY MORE gl0buli!"
 
-echo "We don't want to be too specific about our gl0buli"
+echo -e "\nWe don't want to be too specific about our gl0buli"
 gl0buli=$(echo "${gl0buli}" | shasum)
 
-echo "Let's have a first peak what out gl0buli might look like!"
+echo -e "\nLet's have a first peak what out gl0buli might look like!"
 echo "This is it: $(colorize ${gl0buli})"
 
-echo "Get the 'most important parts*' out of our gl0buli."
+echo -e "\nGet the 'most important parts*' out of our gl0buli."
 echo "*(Ancient knowledge from a tibetan monk)"
 gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 
-echo "It was transformed into this: $(colorize ${gl0buli})"
+echo -e "\nIt was transformed into this: $(colorize ${gl0buli})"
 echo "Now rotate gl0buli clockwise"
 gl0buli=$(rot13 "${gl0buli}")
 
-echo "We need a little patience"
+echo -e "\nWe need a little patience"
 patience=$(awk 'BEGIN{srand();print int(rand()*(30-10))+10 }')
 echo "Now showing patience for ${patience} seconds"
 show_patience "00:00:${patience}"
 echo "That's enough. Time is money!"
 
-echo "Add some fate. This fate was once a diceroll."
+echo -e "\nAdd some fate. This fate was once a diceroll."
 echo "Your fate was selected by a fair diceroll!"
 fair_diceroll="5"
 echo "Your fate: ${fair_diceroll}"
 gl0buli="${gl0buli}${fair_diceroll}"
 
-echo "Potentisation of $(colorize "${gl0buli}")"
+echo -e "\nPotentisation of $(colorize "${gl0buli}")"
 echo "This one is suuuuper important!"
 for magic in {1..5}
 do
 	gl0buli+="${gl0buli}${magic}"
 done
 
-echo "Oooops, our gl0buli is too large. Let's pick the most important…"
+echo -e "\nOooops, our gl0buli is too large. Let's pick the most important…"
 echo "Yeah, this ancient monk stuff"
 gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 
-echo "Let's shake the gl0buli!"
+echo -e "\nLet's shake the gl0buli!"
 oldgl0buli=$gl0buli
 gl0buli=$(shake "${gl0buli}")
 echo "Whoo, $(colorize "${gl0buli}") looks much better than $(colorize ${oldgl0buli})!"
@@ -251,12 +251,12 @@ echo "${comment} $(colorize ${gl0buli})"
 echo "${comment}"
 echo ""
 
-echo "Do you want to print your awesome gl0buli as ASCII or save it as HTML?"
+echo -e "\nDo you want to print your awesome gl0buli as ASCII or save it as HTML?"
 echo "1) Show me some ASCII!"
 echo "2) I'd like to have some fancy HTML!"
 echo "3) Just as plain text, please!"
 echo "4) None of the above, I'm fine. Thanks!"
-
+echo ""
 
 while true; do
 	read -rp "Your choice: " -n 1 print
@@ -287,8 +287,11 @@ while true; do
 	esac
 done
 
-echo "Send gl0buli.sh within 24 hours to 12 friends or something really bad will happen!"
+echo -e "\nSend gl0buli.sh within 24 hours to 12 friends or something really bad will happen!"
+sleep 4
 echo "Really."
+sleep 4
+echo "Really?"
 
 # Destroy all evidence of our holistic variable $gl0buli
 unset gl0buli
