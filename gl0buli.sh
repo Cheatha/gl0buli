@@ -183,6 +183,31 @@ echo "Done."
 echo -e "\nThis gl0buli has a strong binding to time and space!"
 read -rp "Where are you now? " LOCATION
 
+echo -e "\nHope you've got nice weather at ${LOCATION}!"
+
+if command -v curl &> /dev/null
+then
+	echo "By the way: Should we check the weather for ${LOCATION} on wttr.in?"
+	echo "(It's perfectly fine to say 'no'! :)"
+
+	while true; do
+		echo ""
+		read -rp "Type 'y' for 'yes' or 'n' for 'no': " -n 1 wttr
+		echo ""
+			case "${wttr}" in
+				y|Y)
+					weather="$(curl -s wttr.in/${LOCATION}\?format=4)"
+					echo ${weather}
+					break
+					;;
+				*)
+					echo "Fine, we'll move on. Who cares about the weather anyway?"
+					break
+				;;
+		esac
+	done
+fi
+
 time=$(date +"%Y-%m-%d %H:%M:%S")
 echo "Your time is now: ${time}"
 
