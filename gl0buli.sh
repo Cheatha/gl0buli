@@ -174,11 +174,9 @@ fi
 selectLanguage
 selectTag
 
-echo "Getting our ingredients…"
-echo ""
-gl0buli="$(getRandomness 32 10)"
-echo ""
-echo "Done."
+echo "Getting our first ingredients…"
+gl0buli="$(getRandomness 10)"
+echo "Done. We've got $(colorize ${gl0buli}). That's a good start!"
 
 echo -e "\nThis gl0buli has a strong binding to time and space!"
 read -rp "Where are you now? " LOCATION
@@ -228,10 +226,7 @@ gl0buli="${gl0buli} BUY MORE gl0buli!"
 echo "Look how tasty it looks now: $(colorize ${gl0buli})"
 
 echo -e "\nWe don't want to be too specific about our gl0buli"
-gl0buli=$(echo "${gl0buli}" | shasum)
-
-echo -e "\nLet's have a first peak what out gl0buli might look like!"
-echo "This is it: $(colorize ${gl0buli})"
+gl0buli=$(echo "${gl0buli}")
 
 echo -e "\nGet the 'most important parts*' out of our gl0buli."
 echo "*(Ancient knowledge from a tibetan monk)"
