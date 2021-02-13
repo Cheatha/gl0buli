@@ -28,7 +28,7 @@ showHelp() {
 }
 
 selectLanguage() {
-	case $input in
+	case "${input}" in
 		php|c|c++|go|javascript|java|swift|objc)
 			tag="doubleslash"
 			;;
@@ -49,7 +49,7 @@ selectLanguage() {
 }
 
 selectTag() {
-	case $tag in
+	case "${tag}" in
 		doubleslash)
 			comment="//"
 			;;
@@ -70,44 +70,44 @@ getRandomness() {
 	# although we are talking about homeopathy
 	# "bs" doesn't mean bullshit here
 	random=$(dd if=/dev/urandom bs="$1" count="$2")
-	echo "$random"
+	echo "${random}"
 }
 
 show_patience() {
 	# we must be patient and show some patience!
 	patience_o_meter="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
-	OLDIFS="$IFS"
+	OLDIFS="${IFS}"
 	IFS=:
 	set -- $@
 	timer=$(( ${1#0} * 3600 + ${2#0} * 60 + ${3#0} ))
-	while [[ $timer -gt 0 ]]
+	while [[ "${timer}" -gt 0 ]]
 	do
 		sleep 1 &
-		printf "\\r${patience_o_meter:$timer%${#patience_o_meter}:1} %02d:%02d:%02d " $((timer/3600)) $(( (timer/60)%60)) $((timer%60))
-		timer=$(( timer - 1 ))
+		printf "\\r${patience_o_meter:${timer}%${#patience_o_meter}:1} %02d:%02d:%02d " $((timer/3600)) $(( (timer/60)%60)) $((timer%60))
+		timer="$(( timer - 1 ))"
 		wait
 	done
 	echo
-	IFS=$OLDIFS
+	IFS="${OLDIFS}"
 }
 
 rot13() {
-	echo "$1" | tr A-Za-z N-ZA-Mn-za-m
+	echo "${1}" | tr A-Za-z N-ZA-Mn-za-m
 }
 
 sieve() {
-	case $1 in
+	case "${1}" in
 		python)
-			echo "$2" | tr "acefijmopqruvxzACEFIJMOPQRUVXZ13579" "	                   "
+			echo "${2}" | tr "acefijmopqruvxzACEFIJMOPQRUVXZ13579" "	                   "
 			;;
 		*)
-			echo "$2"
+			echo "${2}"
 			;;
 	esac
 }
 
 shake() {
-	length=${#1}
+	length="${#1}"
 	declare -a in
 
 	# Create an array, one value for each character
@@ -115,7 +115,7 @@ shake() {
 	do
 		in=(${in[@]+"${in[@]}"} "${1:pos:1}")
 	done
-	
+
 	# Randomize order
 	out=($(echo "${in[*]}" | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
 
@@ -129,7 +129,7 @@ echo "
    .;;:           '.
   /;;:'             \\
  |;;:    gl0buli    :\\ 
-|;;:  $gl0buli     :|
+|;;:  ${gl0buli}     :|
 |;;::.              ;/
  \\;;::.             /
    ';;::.         .'
@@ -139,24 +139,24 @@ echo "
 }
 
 html(){
-	dir_path=$(dirname "$0")
-	gl0buli_path="$dir_path/your_gl0bulis"
+	dir_path=$(dirname "${0}")
+	gl0buli_path="${dir_path}/your_gl0bulis"
 
-	if [[ ! -d  "$gl0buli_path" ]]; then
-		mkdir -p "$gl0buli_path"
+	if [[ ! -d  "${gl0buli_path}" ]]; then
+		mkdir -p "${gl0buli_path}"
 	fi
 
 	date=$(date +"%Y-%m-%d_%H-%M-%S")
 
 	html_template="gl0buli.template.html"
-	html_template_path="$dir_path/$html_template"
+	html_template_path="${dir_path}/${html_template}"
 
-	sed s/INSERT_GL0BULI_HERE/"$gl0buli"/ "$html_template_path" > "$gl0buli_path/gl0buli-$date.html"
+	sed s/INSERT_GL0BULI_HERE/"${gl0buli}"/ "${html_template_path}" > "${gl0buli_path}/gl0buli-${date}.html"
 
-	echo "Your gl0buli can pick up here: $gl0buli_path/gl0buli-$date.html"
+	echo "Your gl0buli can pick up here: ${gl0buli_path}/gl0buli-${date}.html"
 }
 
-if [[ -z $input ]]; then
+if [[ -z "${input}" ]]; then
 	showHelp
 	exit
 fi
@@ -167,7 +167,7 @@ selectTag
 
 echo "Gettting our ingredients…"
 echo ""
-gl0buli=$(getRandomness 32 10)
+gl0buli="$(getRandomness 32 10)"
 echo ""
 echo "Done."
 
@@ -175,68 +175,68 @@ echo "This gl0buli has a strong binding to time and space!"
 read -rp "Where are you now? " LOCATION
 
 time=$(date +"%Y-%m-%d %H:%M:%S")
-echo "Your time is now: $time"
+echo "Your time is now: ${time}"
 
 space=$(df / | tail -n 1 | awk '/\s*/ { print $4 }')
-echo "The computer has chosen its space to be: $space"
+echo "The computer has chosen its space to be: ${space}"
 
 echo "We now combine human and computer space for better compatibility"
-space="$space$LOCATION"
+space="${space}${LOCATION}"
 
 echo "Now we merge gl0buli with time and space"
-gl0buli="$gl0buli $space $time"
+gl0buli="${gl0buli} ${space} ${time}"
 
 echo "Insert some special ingredients"
-gl0buli="$gl0buli BUY MORE gl0buli!"
+gl0buli="${gl0buli} BUY MORE gl0buli!"
 
 echo "We don't want to be too specific about our gl0buli"
-gl0buli=$(echo "$gl0buli" | shasum)
+gl0buli=$(echo "${gl0buli}" | shasum)
 
 echo "Get the 'most important parts*' out of our gl0buli."
 echo "*(Ancient knowledge from a tibetan monk)"
-gl0buli=$(echo "$gl0buli" | cut -c1-10)
+gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 
 echo "Now rotate gl0buli clockwise"
-gl0buli=$(rot13 "$gl0buli")
+gl0buli=$(rot13 "${gl0buli}")
 
 echo "We need a little patience"
 patience=$(awk 'BEGIN{srand();print int(rand()*(30-10))+10 }')
-echo "Now showing patience for $patience seconds"
-show_patience "00:00:$patience"
+echo "Now showing patience for ${patience} seconds"
+show_patience "00:00:${patience}"
 echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
 echo "Your fate was selected by a fair diceroll!"
 diceroll="5"
-echo "Your fate: $diceroll"
-gl0buli="$gl0buli$diceroll"
+echo "Your fate: ${diceroll}"
+gl0buli="${gl0buli}${diceroll}"
 
-echo "Potentisation of $gl0buli"
+echo "Potentisation of ${gl0buli}"
 echo "This one is suuuuper important!"
 for magic in {1..5}
 do
-	gl0buli+="$gl0buli$magic"
+	gl0buli+="${gl0buli}${magic}"
 done
 
 echo "Oooops, our gl0buli is too large. Let's pick the most important…"
 echo "Yeah, this ancient monk stuff"
-gl0buli=$(echo "$gl0buli" | cut -c1-10)
+gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 
 echo "Let's shake the gl0buli!"
 oldgl0buli=$gl0buli
-gl0buli=$(shake "$gl0buli")
-echo "Whoo, $gl0buli looks much better than $oldgl0buli!"
+gl0buli=$(shake "${gl0buli}")
+echo "Whoo, ${gl0buli} looks much better than ${oldgl0buli}!"
 
-gl0buli=$(sieve "$input" "$gl0buli")
+gl0buli=$(sieve "${input}" "${gl0buli}")
 
 echo "CONGRATULATIONS! Now you have your own gl0buli!"
 echo ""
-echo "$comment"
-echo "$comment This is a \$gl0buli. It will help to solve your coding errors!"
-echo "$comment Copy this to your code and someday someone will somewhere solve your errors."
-echo "$comment Just believe in it!"
-echo "$comment $gl0buli"
-echo "$comment"
+echo "${comment}"
+echo "${comment} This is a \$gl0buli. It will help to solve your coding errors!"
+echo "${comment} Copy this to your code and someday someone will somewhere solve your errors."
+echo "${comment} Just believe in it!"
+echo "${comment} $gl0buli"
+echo "${comment}"
 echo ""
 
 echo "Do you want to print your awesome gl0buli as ASCII or save it as HTML?"
@@ -249,7 +249,7 @@ while true; do
 	read -rp "Your choice: " -n 1 print
 	echo ""
 
-	case $print in
+	case "${print}" in
 		1)
 		echo "Here you go:"
 		ascii
