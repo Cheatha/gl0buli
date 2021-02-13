@@ -106,6 +106,10 @@ sieve() {
 	esac
 }
 
+colorize() {
+echo -e -n "\033[1;36m${1}\033[0m"
+}
+
 shake() {
 	length="${#1}"
 	declare -a in
@@ -123,7 +127,7 @@ shake() {
 }
 
 plain(){
-echo "${comment} ${gl0buli}"
+echo "${comment} $(colorize "${gl0buli}")"
 }
 
 ascii(){
@@ -215,7 +219,7 @@ fair_diceroll="5"
 echo "Your fate: ${fair_diceroll}"
 gl0buli="${gl0buli}${fair_diceroll}"
 
-echo "Potentisation of ${gl0buli}"
+echo "Potentisation of $(colorize "${gl0buli}")"
 echo "This one is suuuuper important!"
 for magic in {1..5}
 do
@@ -229,7 +233,7 @@ gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 echo "Let's shake the gl0buli!"
 oldgl0buli=$gl0buli
 gl0buli=$(shake "${gl0buli}")
-echo "Whoo, ${gl0buli} looks much better than ${oldgl0buli}!"
+echo "Whoo, $(colorize "${gl0buli}") looks much better than $(colorize ${oldgl0buli})!"
 
 gl0buli=$(sieve "${input}" "${gl0buli}")
 
@@ -239,7 +243,7 @@ echo "${comment}"
 echo "${comment} This is a \$gl0buli. It will help to solve your coding errors!"
 echo "${comment} Copy this to your code and someday someone will somewhere solve your errors."
 echo "${comment} Just believe in it!"
-echo "${comment} $gl0buli"
+echo "${comment} $(colorize ${gl0buli})"
 echo "${comment}"
 echo ""
 
@@ -266,7 +270,7 @@ while true; do
 		break
 		;;
 		3)
-		echo "This is your beautiful new gl0buli: ${gl0buli}"
+		echo "This is your beautiful new gl0buli: $(colorize "${gl0buli}")"
 		break
 		;;
 		4)
