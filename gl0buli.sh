@@ -209,19 +209,23 @@ then
 fi
 
 time=$(date +"%Y-%m-%d %H:%M:%S")
-echo "Your time is now: ${time}"
+echo -e "\nYour time is now: $(colorize ${time}). Thats an important part, we'll add it to our gl0buli. Later."
 
 space=$(df / | tail -n 1 | awk '/\s*/ { print $4 }')
-echo "The computer has chosen its space to be: ${space}"
+echo "The computer has chosen its space to be: $(colorize ${space})"
+echo "(Really, don't know what this means, but who does understand computers anyway?)"
 
 echo -e "\nWe now combine human and computer space for better compatibility"
+echo "Combine $(colorize "${LOCATION} ") and $(colorize ${space})"
 space="${space}${LOCATION}"
 
 echo -e "\nNow we merge gl0buli with time and space"
 gl0buli="${gl0buli} ${space} ${time}"
+echo "Whoohoo, no we've got $(colorize ${gl0buli})."
 
 echo -e "\nInsert some special ingredients"
 gl0buli="${gl0buli} BUY MORE gl0buli!"
+echo "Look how tasty it looks now: $(colorize ${gl0buli})"
 
 echo -e "\nWe don't want to be too specific about our gl0buli"
 gl0buli=$(echo "${gl0buli}" | shasum)
