@@ -122,6 +122,10 @@ shake() {
 	( IFS=$''; echo "${out[*]}"; )
 }
 
+plain(){
+echo "${comment} ${gl0buli}"
+}
+
 ascii(){
 echo "
         _....._
@@ -242,7 +246,8 @@ echo ""
 echo "Do you want to print your awesome gl0buli as ASCII or save it as HTML?"
 echo "1) Show me some ASCII!"
 echo "2) I'd like to have some fancy HTML!"
-echo "3) None of the above, I'm fine. Thanks!"
+echo "3) Just as plain text, please!"
+echo "4) None of the above, I'm fine. Thanks!"
 
 
 while true; do
@@ -261,6 +266,10 @@ while true; do
 		break
 		;;
 		3)
+		echo "This is your beautiful new gl0buli: ${gl0buli}"
+		break
+		;;
+		4)
 		echo "Fine. Enjoy your gl0buli!"
 		break
 		;;
