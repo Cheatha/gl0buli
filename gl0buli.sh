@@ -211,9 +211,9 @@ echo "That's enough. Time is money!"
 
 echo "Add some fate. This fate was once a diceroll."
 echo "Your fate was selected by a fair diceroll!"
-diceroll="5"
-echo "Your fate: ${diceroll}"
-gl0buli="${gl0buli}${diceroll}"
+fair_diceroll="5"
+echo "Your fate: ${fair_diceroll}"
+gl0buli="${gl0buli}${fair_diceroll}"
 
 echo "Potentisation of ${gl0buli}"
 echo "This one is suuuuper important!"
