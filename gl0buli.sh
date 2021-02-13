@@ -92,7 +92,8 @@ show_patience() {
 }
 
 rot13() {
-	echo "${1}" | tr A-Za-z N-ZA-Mn-za-m
+	rot13=$(echo "${1}" | tr A-Za-z N-ZA-Mn-za-m)
+	echo ${rot13}
 }
 
 sieve() {
