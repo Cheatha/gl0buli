@@ -169,7 +169,7 @@ fi
 selectLanguage
 selectTag
 
-echo "Gettting our ingredients…"
+echo "Getting our ingredients…"
 echo ""
 gl0buli="$(getRandomness 32 10)"
 echo ""
