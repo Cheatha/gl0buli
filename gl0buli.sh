@@ -23,13 +23,13 @@ showHelp() {
 	echo "USAGE:"
 	echo -e "\\tgl0buli.sh language\\n"
 	echo "Available languages:"
-	echo -e "\\tphp applescript bash c c++ go ruby java javascript perl batch python puppet swift objc"
+	echo -e "\\tphp applescript bash c c++ go ruby java javascript perl batch python puppet swift objc rust"
 	exit 0
 }
 
 selectLanguage() {
 	case "${input}" in
-		php|c|c++|go|javascript|java|swift|objc)
+		php|c|c++|go|javascript|java|swift|objc|rust)
 			tag="doubleslash"
 			;;
 		applescript)
