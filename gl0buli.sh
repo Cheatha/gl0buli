@@ -200,10 +200,14 @@ gl0buli="${gl0buli} BUY MORE gl0buli!"
 echo "We don't want to be too specific about our gl0buli"
 gl0buli=$(echo "${gl0buli}" | shasum)
 
+echo "Let's have a first peak what out gl0buli might look like!"
+echo "This is it: $(colorize ${gl0buli})"
+
 echo "Get the 'most important parts*' out of our gl0buli."
 echo "*(Ancient knowledge from a tibetan monk)"
 gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 
+echo "It was transformed into this: $(colorize ${gl0buli})"
 echo "Now rotate gl0buli clockwise"
 gl0buli=$(rot13 "${gl0buli}")
 
