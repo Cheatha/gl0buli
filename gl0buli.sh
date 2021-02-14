@@ -220,7 +220,7 @@ echo -e "\nNow we merge gl0buli with time and space"
 gl0buli="${gl0buli} ${newspace} ${time}"
 echo "Whoohoo, no we've got $(colorize ${gl0buli})."
 
-echo -e "\nInsert some special ingredients"
+echo -e "\nInsert some _special_ ingredients"
 gl0buli="${gl0buli} BUY MORE gl0buli!"
 echo "Look how tasty it looks now: $(colorize ${gl0buli})"
 
