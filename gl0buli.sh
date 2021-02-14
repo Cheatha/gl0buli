@@ -213,11 +213,11 @@ echo "The computer has chosen its space to be: $(colorize ${space})"
 echo "(Really, don't know what this means, but who does understand computers anyway?)"
 
 echo -e "\nWe now combine human and computer space for better compatibility"
-echo "Combine $(colorize "${LOCATION} ") and $(colorize ${space})"
-space="${space}${LOCATION}"
+echo "Combine $(colorize "${LOCATION}") and $(colorize ${space})"
+newspace="${space} ${LOCATION}"
 
 echo -e "\nNow we merge gl0buli with time and space"
-gl0buli="${gl0buli} ${space} ${time}"
+gl0buli="${gl0buli} ${newspace} ${time}"
 echo "Whoohoo, no we've got $(colorize ${gl0buli})."
 
 echo -e "\nInsert some special ingredients"
