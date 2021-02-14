@@ -234,6 +234,7 @@ gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 echo -e "\nIt was transformed into this: $(colorize ${gl0buli})"
 echo "Now rotate gl0buli clockwise"
 gl0buli=$(rot13 "${gl0buli}")
+echo "It is now $(colorize "${gl0buli}")"
 
 echo -e "\nWe need a little patience"
 patience=$(awk 'BEGIN{srand();print int(rand()*(30-10))+10 }')
