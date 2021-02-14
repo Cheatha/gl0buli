@@ -247,11 +247,11 @@ fair_diceroll="5"
 echo "Your fate: ${fair_diceroll}"
 gl0buli="${gl0buli}${fair_diceroll}"
 
-echo -e "\nPotentisation of $(colorize "${gl0buli}")"
+echo -e "\nFake potentisation of $(colorize "${gl0buli}")"
 echo "This one is suuuuper important!"
-for magic in {1..5}
+for magic in $( seq 1 5)
 do
-	gl0buli+="${gl0buli}${magic}"
+	gl0buli="${gl0buli}-${magic}"
 done
 
 echo -e "\nOooops, our gl0buli is too large. Let's pick the most important…"
@@ -259,7 +259,7 @@ echo "Yeah, this ancient monk stuff"
 gl0buli=$(echo "${gl0buli}" | cut -c1-10)
 
 echo -e "\nLet's shake the gl0buli!"
-oldgl0buli=$gl0buli
+oldgl0buli="${gl0buli}"
 gl0buli=$(shake "${gl0buli}")
 echo "Whoo, $(colorize "${gl0buli}") looks much better than $(colorize ${oldgl0buli})!"
 
