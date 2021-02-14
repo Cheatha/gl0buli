@@ -194,8 +194,7 @@ then
 		echo ""
 			case "${wttr}" in
 				y|Y)
-					weather="$(curl -s wttr.in/${LOCATION}\?format=4)"
-					echo ${weather}
+					curl -s wttr.in/${LOCATION}\?0
 					break
 					;;
 				*)
