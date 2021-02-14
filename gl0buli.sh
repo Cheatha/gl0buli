@@ -254,9 +254,9 @@ do
 	gl0buli="${gl0buli}-${magic}"
 done
 
-echo -e "\nOooops, our gl0buli is too large. Let's pick the most important…"
-echo "Yeah, this ancient monk stuff"
+echo -e "\nOooops, our gl0buli $(colorize "${gl0buli}") is too large. Let's pick the most important…"
 gl0buli=$(echo "${gl0buli}" | cut -c1-10)
+echo "Yeah, this ancient monk stuff. It's now $(colorize "${gl0buli}")"
 
 echo -e "\nLet's shake the gl0buli!"
 oldgl0buli="${gl0buli}"
