@@ -420,7 +420,8 @@ echo -e "\nThat's the first round. Just the first one."
 sleep 2
 echo "We'll repeat this for another $(colorize "$(expr ${my_potency} - 1)") rounds."
 
-echo -e "Do you wan't to see the characters we mix your gl0buli with? Might produce a lot of output. But it's nice to get a glimpse of what we are talking about.\n"
+echo -e "Do you want to see the characters we mix your gl0buli with? Might produce a lot of output."
+echo -e "But it's nice to get a glimpse of what we are talking about.\n"
 read -rp "Press $(colorize "Y") to show all or any other key to hide: " -n1 verbose
 verbose=$(echo ${verbose}|awk '{ print toupper($0) }')
 
