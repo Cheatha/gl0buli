@@ -228,7 +228,7 @@ dance_2="\t(•_•)
 		gl0buli=$(echo ${mixture}|cut -c1-${initial_size})
 
 		echo "New gl0buli is: $(colorize ${gl0buli})."
-		#sleep 2
+		sleep 2
 	done
 }
 
@@ -411,13 +411,13 @@ echo "This means we will potentize your poor gl0buli according to homeopathy."
 
 dilution_length=$(expr ${dilution_ratio} \* ${#gl0buli})
 echo "- First we dilute the gl0buli, which has a lenght of $(colorize "${#gl0buli} characters"), with $(colorize "${dilution_length} random characters")"
-#sleep 2
+sleep 2
 echo "- Then we will $(colorize "shake it")"
-#sleep 2
+sleep 2
 echo "- Next we will extract $(colorize "${#gl0buli} random characters") from it"
-#sleep 4
+sleep 4
 echo -e "\nThat's the first round. Just the first one."
-#sleep 2
+sleep 2
 echo "We'll repeat this for another $(colorize "$(expr ${my_potency} - 1)") rounds."
 
 echo -e "Do you wan't to see the characters we mix your gl0buli with? Might produce a lot of output. But it's nice to get a glimpse of what we are talking about.\n"
