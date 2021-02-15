@@ -481,7 +481,7 @@ while true; do
 done
 
 echo -e "\nWe've finished our gl0buli in form of a dilution fluid. Now we have to apply this fluid onto sugar."
-echo -e "Usally you mix it 1:100, so 1ml dilution fluid will be applied onto 100g sugar pills. There are 110-130 pills in 100g sugar pill."
+echo -e "Usally you mix it 1:100, so 1ml dilution fluid will be applied onto 100g of sugar pills, which contains about 110-130 pills."
 echo -e "Please apply it accordingly!\n"
 
 echo -e "\nPlease like and subscribe and send gl0buli.sh within 24 hours to 12 friends or something really bad will happen!"
