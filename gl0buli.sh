@@ -66,11 +66,73 @@ selectTag() {
 }
 
 getRandomness() {
-	# we expect bs and count as $1 and $2
-	# although we are talking about homeopathy
-	# "bs" doesn't mean bullshit here
-	random=$(dd if=/dev/urandom bs="$1" count="$2")
-	echo "${random}"
+	length="${1}"
+	random=$(LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | head -c 100000 | xargs|cut -c1-${length})
+	echo ${random}
+}
+
+get_dilution() {
+	case "${1}" in
+		C)
+		dilution_shakes="10"
+		dilution_ratio="100"
+		;;
+		D)
+		dilution_shakes="10"
+		dilution_ratio="10"
+		;;
+		Q)
+		dilution_shakes="100"
+		dilution_ratio="50000"
+		;;
+		*)
+		echo "No dilution given. Exit"
+		exit 1
+		;;
+	esac
+}
+
+set_dilution() {
+	for dilution in D C Q; do
+		get_dilution "${dilution}"
+		echo "- $(colorize ${dilution}): 1:${dilution_ratio} potency per round, ${dilution_shakes} shakes"
+	done
+}
+
+set_potency() {
+	case "${1}" in
+		C|c)
+			common_potency_min=1
+			common_potency_max=1000
+		;;
+		d|D)
+			common_potency_min=1
+			common_potency_max=1000
+		;;
+		q|Q)
+			common_potency_min=1
+			common_potency_max=160
+		;;
+	esac
+
+	echo -e "\nNow we need to choose a suitable potency. With $(colorize $(echo ${1}|awk '{ print toupper($0) }')) dilution potencys between ${common_potency_min} and ${common_potency_max} are common."
+
+		read -rp "Select potency (${common_potency_min} and ${common_potency_max}): " -n 4 potency
+		echo ""
+
+	if [[ -z ${potency} ]]; then
+		echo "Please choose a potency between ${common_potency_min} and ${common_potency_max}"
+		set_potency "${1}"
+	fi
+
+	if (( "${potency}" >= "${common_potency_min}" && "${potency}" <= "${common_potency_max}" )); then
+		my_potency="${potency}"
+		break
+	else
+		echo "Potency out of range! Start again."
+		set_potency "${1}"
+	fi
+
 }
 
 show_patience() {
@@ -125,6 +187,49 @@ shake() {
 	out=($(echo "${in[*]}" | tr ' ' '\n' | awk 'BEGIN { srand() } { print rand() "\t" $0 }' | sort -n | cut -f2- ))
 
 	( IFS=$''; echo "${out[*]}"; )
+}
+
+start_dilusion(){
+	gl0buli="$(echo ${gl0buli}| tr -d '[:space:]')"
+	initial_size="${#gl0buli}"
+	initial_gl0buli="${gl0buli}"
+
+	for round in $( seq 1 "${my_potency}"); do
+		echo -e "\nRound: ${round}"
+
+		echo "Add random characters which don't contain any characters from our gl0buli"
+		dirty_stuff="$(getRandomness "$(expr "${dilution_length}" \* 2)")"
+		remove_chars="$(echo "${gl0buli}${initial_gl0buli}" | grep -o . | sort | uniq | tr -d "\n")"
+
+		clean_stuff="${dirty_stuff}"
+		while read -n 1 char ; do
+			if [[ ! -z "${char}" ]]; then
+				clean_stuff="$(echo ${clean_stuff}| tr -d ${char})"
+			fi
+		done <<< "$(echo "${remove_chars}")"
+
+		clean_stuff=${clean_stuff:0:${dilution_length}}
+		[[ "${verbose}" == "Y" ]] && echo -e "We've got this clean stuff: ${clean_stuff}\n"
+		echo "Now: Mix and shake!"
+
+dance_1="\t(•_•)
+\t<) )╯
+\t/ \ "
+
+dance_2="\t(•_•)
+\t\( (>
+\t / \ "
+		for shake in $(seq "${dilution_shakes}");  do
+			[ $((shake%2)) -eq 0 ] && echo -e "\n   \o\ SHAKE! \o\ \n\n${dance_1}\n" || echo -e "\n   /o/ SHAKE! /o/ \n\n${dance_2}\n"
+			mixture="$(shake "${gl0buli}${clean_stuff}")"
+		done
+
+		echo "Extract new gl0buli!"
+		gl0buli=$(echo ${mixture}|cut -c1-${initial_size})
+
+		echo "New gl0buli is: $(colorize ${gl0buli})."
+		#sleep 2
+	done
 }
 
 plain(){
@@ -267,9 +372,70 @@ echo "Whoo, $(colorize "${gl0buli}") looks much better than $(colorize ${oldgl0b
 
 gl0buli=$(sieve "${input}" "${gl0buli}")
 
-echo "CONGRATULATIONS! Now you have your own gl0buli!"
-echo ""
-echo "${comment}"
+echo -e "\n⋆ ✢ ✣ ✤ ✥ ✦ ✧ ✩ ✪ ✫ ✬ ✭ ✮ ✯ ✰ ★ ۞"
+echo "We've successfully prepared our source substance."
+echo "Let's begin with out homeopathy according to Hahnemann."
+echo -e -n "Our gl0buli looks like this: $(colorize ${gl0buli}).\n"
+echo -e "Next we will need our dilution. You can choose between these dilutions, like in a real world homeopathy scenario:\n"
+
+set_dilution
+
+while true; do
+	echo ""
+	read -rp "Your choice: " -n 1 dilution
+	dilution="$(echo ${dilution}|awk '{ print toupper($0) }')"
+
+	echo ""
+	case "${dilution}" in
+		Q)
+			echo "$(colorize 'WARNING!') You have chosen $(colorize $(echo ${dilution})) as diltion. This means we will work with pretty large strings."
+			echo "This will take a while. It will slow down your device. Please check your CPU temperature, load and battery level."
+			echo "You can cancel this script anytime with $(colorize 'CTRL+C')"
+			echo -e "Who cares about warnings in homeopathy, right? Let's move on!\n"
+			read -rp "Press any key to continue " -n1 yolo
+			get_dilution ${dilution}
+			set_potency ${dilution}
+			;;
+		C|D)
+			get_dilution ${dilution}
+			set_potency ${dilution}
+			;;
+		*)
+			echo "Please choose your dilution! Press C, D or Q: "
+		;;
+	esac
+done
+
+echo -e "\nYou have chosen $(colorize $(echo ${dilution}|awk '{ print toupper($0) }')${my_potency})."
+echo "This means we will potentize your poor gl0buli according to homeopathy."
+
+dilution_length=$(expr ${dilution_ratio} \* ${#gl0buli})
+echo "- First we dilute the gl0buli, which has a lenght of $(colorize "${#gl0buli} characters"), with $(colorize "${dilution_length} random characters")"
+#sleep 2
+echo "- Then we will $(colorize "shake it")"
+#sleep 2
+echo "- Next we will extract $(colorize "${#gl0buli} random characters") from it"
+#sleep 4
+echo -e "\nThat's the first round. Just the first one."
+#sleep 2
+echo "We'll repeat this for another $(colorize "$(expr ${my_potency} - 1)") rounds."
+
+echo -e "Do you wan't to see the characters we mix your gl0buli with? Might produce a lot of output. But it's nice to get a glimpse of what we are talking about.\n"
+read -rp "Press $(colorize "Y") to show all or any other key to hide: " -n1 verbose
+verbose=$(echo ${verbose}|awk '{ print toupper($0) }')
+
+echo -e "\nHave a last look at your beautiful gl0buli $(colorize ${gl0buli}) before we start.\n"
+read -rp "Press any key to continue " -n1 NSA_CIA_FBI_KGB_BND_MI5_GCHQ
+
+start_dilusion
+
+common=$(comm -12 <(fold -w1 <<< ${gl0buli} | sort -u) <(fold -w1 <<< ${initial_gl0buli} | sort -u) | tr -d '\n')
+echo -e "\nAll rounds done!"
+echo "Our initial gl0buli was $(colorize ${initial_gl0buli}), now we've got $(colorize ${gl0buli}). They share $(colorize "${#common} characters")."
+
+echo -e "\n$(colorize "CONGRATULATIONS! Now you have your own gl0buli!")"
+
+echo -e "\n${comment}"
 echo "${comment} This is a \$gl0buli. It will help to solve your coding errors!"
 echo "${comment} Copy this to your code and someday someone will somewhere solve your errors."
 echo "${comment} Just believe in it!"
@@ -313,7 +479,11 @@ while true; do
 	esac
 done
 
-echo -e "\nSend gl0buli.sh within 24 hours to 12 friends or something really bad will happen!"
+echo -e "\nWe've finished our gl0buli in form of a dilution fluid. Now we have to apply this fluid onto sugar."
+echo -e "Usally you mix it 1:100, so 1ml dilution fluid will be applied onto 100g sugar pills. There are 110-130 pills in 100g sugar pill."
+echo -e "Please apply it accordingly!\n"
+
+echo -e "\nPlease like and subscribe and send gl0buli.sh within 24 hours to 12 friends or something really bad will happen!"
 sleep 4
 echo "Really."
 sleep 4
