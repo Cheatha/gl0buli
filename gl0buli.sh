@@ -224,8 +224,15 @@ echo -e "\nInsert some _special_ ingredients"
 gl0buli="${gl0buli} BUY MORE gl0buli!"
 echo "Look how tasty it looks now: $(colorize ${gl0buli})"
 
-echo -e "\nWe don't want to be too specific about our gl0buli"
-gl0buli=$(echo "${gl0buli}")
+echo -e "\nAdd some fate. This fate was once a diceroll."
+echo "Your fate was selected by a fair diceroll!"
+fair_diceroll="5"
+echo "Your fate: ${fair_diceroll}"
+gl0buli="${gl0buli}${fair_diceroll}"
+
+echo -e "\nWe don't want to be too specific about our gl0buli. Let's do an hash encrpytion! It's super safe!"
+gl0buli=$(echo "${gl0buli}"|shasum| cut -c1-$(expr ${fair_diceroll} \* 2))
+echo "I'm sure nobody can hack this: $(colorize ${gl0buli})"
 
 echo -e "\nGet the 'most important parts*' out of our gl0buli."
 echo "*(Ancient knowledge from a tibetan monk)"
@@ -241,12 +248,6 @@ patience=$(awk 'BEGIN{srand();print int(rand()*(30-10))+10 }')
 echo "Now showing patience for ${patience} seconds"
 show_patience "00:00:${patience}"
 echo "That's enough. Time is money!"
-
-echo -e "\nAdd some fate. This fate was once a diceroll."
-echo "Your fate was selected by a fair diceroll!"
-fair_diceroll="5"
-echo "Your fate: ${fair_diceroll}"
-gl0buli="${gl0buli}${fair_diceroll}"
 
 echo -e "\nFake potentisation of $(colorize "${gl0buli}")"
 echo "This one is suuuuper important!"
