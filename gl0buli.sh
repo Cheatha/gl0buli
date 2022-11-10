@@ -462,7 +462,7 @@ while true; do
 		break
 		;;
 		2)
-		echo "Your gl0buli will be safed in the gl0bulis directory."
+		echo "Your gl0buli will be saved in the gl0bulis directory."
 		html
 		break
 		;;
