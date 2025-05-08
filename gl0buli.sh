@@ -220,8 +220,10 @@ dance_2="\t(•_•)
 \t\( (>
 \t / \ "
 		for shake in $(seq "${dilution_shakes}");  do
+			clear
 			[ $((shake%2)) -eq 0 ] && echo -e "\n   \o\ SHAKE! \o\ \n\n${dance_1}\n" || echo -e "\n   /o/ SHAKE! /o/ \n\n${dance_2}\n"
 			mixture="$(shake "${gl0buli}${clean_stuff}")"
+			sleep 1
 		done
 
 		echo "Extract new gl0buli!"
