@@ -67,7 +67,7 @@ selectTag() {
 
 getRandomness() {
 	length="${1}"
-	random=$(LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | head -c 100000 | xargs|cut -c1-${length})
+	random=$(head -c 100000 /dev/urandom | LC_ALL=C tr -dc 'A-Za-z0-9' | head -c "${length}")
 	echo ${random}
 }
 
